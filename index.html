@@ -226,7 +226,7 @@
             backdrop-filter: blur(8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             transition: max-width 0.3s ease;
         }
 
@@ -1382,6 +1382,138 @@
       .golden-bloon:active {
           transform: scale(0.85);
       }
+
+      /* ================= TOOLTIP STYLES ================= */
+      .tooltip-container {
+          display: inline-flex;
+          align-items: center;
+          position: relative;
+      }
+      
+      .info-icon {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: rgba(56, 189, 248, 0.1);
+          color: var(--accent-blue);
+          font-size: 10px;
+          font-family: 'JetBrains Mono', monospace;
+          font-weight: bold;
+          font-style: normal;
+          margin-left: 8px;
+          cursor: help;
+          border: 1px solid var(--accent-blue);
+          transition: all 0.2s ease;
+      }
+      
+      .info-icon:hover {
+          background: var(--accent-blue);
+          color: var(--bg-color);
+          box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+      }
+      
+      .info-tooltip {
+          position: absolute;
+          left: 100%;
+          top: 50%;
+          transform: translateY(-50%) translateX(10px);
+          background: rgba(15, 22, 34, 0.90);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 1rem;
+          width: max-content;
+          max-width: 320px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+          z-index: 100;
+          pointer-events: none;
+      }
+      
+      .info-tooltip::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          right: 100%;
+          transform: translateY(-50%);
+          border-width: 6px;
+          border-style: solid;
+          border-color: transparent var(--border-color) transparent transparent;
+      }
+      
+      .tooltip-container:hover .info-tooltip,
+      .info-icon:hover + .info-tooltip {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(-50%) translateX(15px);
+          pointer-events: auto;
+      }
+      
+      .tooltip-category {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.75rem;
+          color: var(--accent-green);
+          margin-top: 0.85rem;
+          margin-bottom: 0.35rem;
+          text-transform: uppercase;
+          border-bottom: 1px dashed var(--border-color);
+          padding-bottom: 2px;
+      }
+      
+      .tooltip-category:first-child {
+          margin-top: 0;
+      }
+      
+      .tooltip-list li {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+      }
+      
+      .uni-icon {
+          width: 18px;
+          height: 18px;
+          object-fit: contain;
+          flex-shrink: 0;
+      }
+      
+      .fun-facts-list .tooltip-list li {
+          padding-left: 0 !important;
+          margin-bottom: 0.3rem;
+          line-height: 1.4;
+          display: flex;
+          align-items: flex-start;
+          gap: 6px;
+      }
+      
+      .fun-facts-list .tooltip-list li::before {
+          content: none !important;
+          display: none !important;
+      }
+      
+      @media (max-width: 768px) {
+          .info-tooltip {
+              left: 0;
+              top: 100%;
+              transform: translateY(10px) translateX(0);
+          }
+          .info-tooltip::before {
+              top: -12px;
+              left: 20px;
+              right: auto;
+              transform: none;
+              border-color: transparent transparent var(--border-color) transparent;
+          }
+          .tooltip-container:hover .info-tooltip,
+          .info-icon:hover + .info-tooltip {
+              transform: translateY(15px) translateX(0);
+          }
+      }
 </style>
 </head>
   
@@ -1484,17 +1616,61 @@
                     <div class="about-section">
                         <h3 class="about-heading">// Current Works</h3>
                         <ul class="status-list">
-                            <li><span class="status-dot green"></span> <strong>Academia:</strong> Reviewing Physics to prepare for Uni.</li>
-                            <li><span class="status-dot blue"></span> <strong>Research:</strong> Manuscript under review at <i>Science & Justice</i>.</li>
-                            <li><span class="status-dot yellow"></span> <strong>Other:</strong> Participating in the Vitalitics Hackathon 2026.</li>
+                            <li><span class="status-dot green"></span> <strong>Academia:</strong> Studying course material.</li>
+                            <li><span class="status-dot blue"></span> <strong>Research:</strong> Finishing major revisions at <i>Science & Justice</i>.</li>
+                            <li><span class="status-dot yellow"></span> <strong>Other:</strong> Making new friends.</li>
                         </ul>
                     </div>
         
                     <div class="about-section">
                         <h3 class="about-heading">// Stats</h3>
                         <ul class="fun-facts-list">
-                            <li>University Pens Collected: <span class="stat-highlight">9 pens </span></li>
-                            <li>BTD6 Black-Bordered Maps: <span class="stat-highlight">26 / 88 maps</span></li>
+                            <li>
+                                <div class="tooltip-container">
+                                    University Pens Collected:&nbsp;<span class="stat-highlight">12 pens</span>
+                                    <i class="info-icon">i</i>
+                                    <div class="info-tooltip">
+                                        <div class="tooltip-category">🇮🇩 Indonesian (8)</div>
+                                        <ul class="tooltip-list">
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UBM.png" alt="" class="uni-icon"> Bunda Mulia University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UKSW.png" alt="" class="uni-icon"> Satya Wacana Christian University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_Atma.png" alt="" class="uni-icon"> Atma Jaya Catholic University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UPH.png" alt="" class="uni-icon"> Pelita Harapan University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UNPAR.png" alt="" class="uni-icon"> Parahyangan Catholic University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_i3L.png" alt="" class="uni-icon"> Indonesia Institute for Life-Sciences</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UMN.png" alt="" class="uni-icon"> Multimedia Nusantara University</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_Prad.png" alt="" class="uni-icon"> Pradita University</li>
+                                        </ul>
+                                    
+                                        <div class="tooltip-category">🇨🇦 Canadian (2)</div>
+                                        <ul class="tooltip-list">
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_UTM.png" alt="" class="uni-icon"> University of Toronto Mississauga</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_MU.png" alt="" class="uni-icon"> Memorial University</li>
+                                        </ul>
+                                    
+                                        <div class="tooltip-category">🏫 Miscellaneous (2)</div>
+                                        <ul class="tooltip-list">
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_Atha.png" alt="" class="uni-icon"> Athalia High School</li>
+                                            <li><img src="https://laturisa.is-a.dev/images/Tooltip_Ward.png" alt="" class="uni-icon"> Wardaya College</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="tooltip-container">
+                                    BTD6 Black-Bordered Maps:&nbsp;<span class="stat-highlight">26 / 88 maps</span>
+                                    <i class="info-icon">i</i>
+                                    <div class="info-tooltip">
+                                        <div class="tooltip-category">🎯 Progress by Difficulty</div>
+                                        <ul class="tooltip-list">
+                                            <li>🟢 Beginner: (26/26)</li>
+                                            <li>🟡 Intermediate: (0/26)</li>
+                                            <li>🟠 Advanced: (0/23)</li>
+                                            <li>🔴 Expert: (0/13)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
